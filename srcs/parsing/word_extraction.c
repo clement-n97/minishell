@@ -6,45 +6,11 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 08:32:00 by clnicola          #+#    #+#             */
-/*   Updated: 2025/11/23 22:00:00 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/15 13:13:56 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	copy_quoted(char *str, int *i, char *result, int *j)
-{
-	char	quote;
-
-	quote = str[*i];
-	(*i)++;
-	while (str[*i] && str[*i] != quote)
-		result[(*j)++] = str[(*i)++];
-	if (str[*i] == quote)
-		(*i)++;
-}
-
-char	*build_unquoted_token(char *str, int *i, int len)
-{
-	char	*res;
-	int		j;
-
-	res = malloc(len + 1);
-	if (!res)
-		return (NULL);
-	j = 0;
-	while (str[*i] && j < len)
-	{
-		if (str[*i] == '\'' || str[*i] == '"')
-			copy_quoted(str, i, res, &j);
-		else if (ft_is_space(str[*i]) || ft_is_operator(str[*i]))
-			break ;
-		else
-			res[j++] = str[(*i)++];
-	}
-	res[j] = '\0';
-	return (res);
-}
 
 static int	quoted_len(char *s, int *p)
 {
@@ -85,7 +51,7 @@ static int	add_len(char *s, int *p)
 	return (len);
 }
 
-char	*extract_word(char *str, int *i)
+char	*extract_word(char *str, int *i, t_data *data)
 {
 	int	len;
 	int	pos;
@@ -98,5 +64,16 @@ char	*extract_word(char *str, int *i)
 		*i = pos;
 		return (ft_strdup(""));
 	}
-	return (build_unquoted_token(str, i, len));
+	return (build_expanded_token(str, i, len, data));
+}
+
+char	*expand_variable(char *str, int *i, t_data *data)
+{
+	(*i)++;
+	if (str[*i] == '?')
+	{
+		(*i)++;
+		return (ft_itoa(data->last_exit_status));
+	}
+	return (get_var_value(str, i, data));
 }

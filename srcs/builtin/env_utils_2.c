@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:03:37 by rlefort           #+#    #+#             */
-/*   Updated: 2025/11/25 21:09:26 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/15 15:25:46 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,29 +102,17 @@ t_env	**ft_copy_env(t_env **env)
 	return (new);
 }
 
-void	ft_swap_env(t_env **env, t_env *to_swap)
+char	**ft_env_to_array(t_env **env)
 {
-	t_env	*curr;
-	t_env	*prev;
+	char	**result;
+	int		count;
 
-	curr = *env;
-	prev = NULL;
-	while (curr && curr != to_swap)
-	{
-		prev = curr;
-		curr = curr->next;
-	}
-	if (!curr || !curr->next)
-		return ;
-	if (!prev)
-	{
-		*env = curr->next;
-		curr->next = curr->next->next;
-		(*env)->next = curr;
-		return ;
-	}
-	prev->next = curr->next;
-	curr->next = curr->next->next;
-	prev->next->next = curr;
-	return ;
+	if (!env)
+		return (NULL);
+	count = ft_count_env_vars(env);
+	result = malloc(sizeof(char *) * (count + 1));
+	if (!result)
+		return (NULL);
+	ft_fill_env_array(result, env);
+	return (result);
 }

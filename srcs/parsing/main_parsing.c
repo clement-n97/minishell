@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:19:02 by clnicola          #+#    #+#             */
-/*   Updated: 2025/11/25 14:43:14 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/15 13:04:27 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_display_commands(t_command *cmd)
 	}
 }
 
-t_token	*ft_word_to_token(char *input)
+t_token	*ft_word_to_token(char *input, t_data *data)
 {
 	t_token	*head;
 	t_token	*new;
@@ -61,7 +61,7 @@ t_token	*ft_word_to_token(char *input)
 			i++;
 			continue ;
 		}
-		new = ft_make_token(input, &i);
+		new = ft_make_token(input, &i, data);
 		ft_add_back_token(&head, new);
 	}
 	return (head);
@@ -69,7 +69,7 @@ t_token	*ft_word_to_token(char *input)
 
 void	ft_parsing(t_data *data, char *input)
 {
-	data->token = ft_word_to_token(input);
+	data->token = ft_word_to_token(input, data);
 	ft_assign_token_type(data);
 	data->cmd = ft_tokens_to_commands(data->token);
 }

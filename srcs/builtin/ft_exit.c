@@ -6,23 +6,41 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 13:37:09 by rlefort           #+#    #+#             */
-/*   Updated: 2025/11/25 21:22:53 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:12:13 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	get_exit_code(t_data *data, int arg_count)
+{
+	if (arg_count > 1)
+	{
+		ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
+		return (1);
+	}
+	if (arg_count == 1)
+	{
+		if (ft_strisnum(data->cmd->args[1]))
+			return (ft_atoi(data->cmd->args[1]));
+		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
+		return (2);
+	}
+	return (data->last_exit_status);
+}
+
 void	builtin_exit(t_data *data)
 {
 	int	exit_code;
+	int	arg_count;
 
-	exit_code = 0;
-	if (data && data->cmd && data->cmd->args && data->cmd->args[1])
+	arg_count = 0;
+	if (data && data->cmd && data->cmd->args)
 	{
-		if (ft_strisnum(data->cmd->args[1]))
-			exit_code = ft_atoi(data->cmd->args[1]);
-		else
-			exit_code = 1;
+		while (data->cmd->args[arg_count])
+			arg_count++;
+		arg_count--;
 	}
+	exit_code = get_exit_code(data, arg_count);
 	exit(exit_code);
 }

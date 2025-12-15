@@ -3,42 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:29:19 by rlefort           #+#    #+#             */
-/*   Updated: 2025/11/12 14:28:00 by rlefort          ###   ########.fr       */
+/*   Updated: 2025/12/15 15:14:23 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	update_or_create(t_env_set_args *args, t_env **env)
+{
+	if (args->curr)
+	{
+		free(args->curr->value);
+		args->curr->value = ft_strdup(args->value);
+	}
+	else
+	{
+		args->curr = ft_new_env_var(args->name, args->value, NULL);
+		if (args->curr)
+		{
+			if (args->prev)
+				args->prev->next = args->curr;
+			else
+				*env = args->curr;
+		}
+	}
+}
+
 int	ft_set_env(char *name, char *value, t_env **env)
 {
-	t_env	*curr;
-	t_env	*prev;
+	t_env_set_args	args;
 
 	if (!env || !name || !name[0] || !value)
 		return (1);
-	curr = *env;
-	prev = NULL;
-	while (curr)
+	args.curr = *env;
+	args.prev = NULL;
+	args.name = name;
+	args.value = value;
+	while (args.curr && ft_strcmp(name, args.curr->name))
 	{
-		if (!ft_strcmp(name, curr->name))
-		{
-			free(curr->value);
-			curr->value = ft_strdup(value);
-			return (0);
-		}
-		prev = curr;
-		curr = curr->next;
+		args.prev = args.curr;
+		args.curr = args.curr->next;
 	}
-	curr = ft_new_env_var(name, value, NULL);
-	if (!curr)
-		return (1);
-	if (prev)
-		prev->next = curr;
-	else
-		*env = curr;
+	update_or_create(&args, env);
 	return (0);
 }
 
@@ -91,38 +100,20 @@ int	ft_rm_env(char *name, t_env **env)
 	return (0);
 }
 
-static char	*ft_get_parent_shlvl(void)
+t_env	*ft_initialize_env(void)
 {
-	char	*tmp;
-	int		lvl_number;
-	char	*shlvl;
+	char	*cwd;
+	t_env	*env;
 
-	tmp = getenv("SHLVL");
-	if (!tmp)
-		return (ft_strdup("1"));
-	lvl_number = ft_atoi(tmp);
-	lvl_number++;
-	shlvl = ft_itoa(lvl_number);
-	return (shlvl);
-}
-
-t_env	**ft_initialize_env(void)
-{
-	char	*value;
-	t_env	**env;
-
-	env = calloc(sizeof(t_env *), 1);
-	*env = ft_new_env_var("PWD", getcwd(NULL, 0), NULL);
-	value = ft_get_parent_shlvl();
-	ft_set_env("SHLVL", value, env);
-	free(value);
-	value = getenv("PATH");
-	if (!value)
-		value = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
-	ft_set_env("PATH", value, env);
-	value = getenv("HOME");
-	if (!value)
-		value = "/home";
-	ft_set_env("HOME", value, env);
+	env = NULL;
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+	{
+		env = ft_new_env_var("PWD", cwd, NULL);
+		free(cwd);
+	}
+	ft_set_env("SHLVL", "1", &env);
+	ft_set_env("PATH", getenv("PATH"), &env);
+	ft_set_env("HOME", getenv("HOME"), &env);
 	return (env);
 }

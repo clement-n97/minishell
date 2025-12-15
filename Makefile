@@ -12,6 +12,8 @@ LIBFT = $(LIBFT_PATH)libft.a
 
 SRC = main.c\
 builtin/main_builtin.c\
+builtin/builtin_status.c\
+builtin/builtin_status_env.c\
 builtin/ft_cd.c\
 builtin/ft_env.c\
 builtin/ft_exit.c\
@@ -21,16 +23,21 @@ builtin/ft_unset.c\
 builtin/builtin_echo.c\
 builtin/env_utils.c\
 builtin/env_utils_2.c\
+builtin/env_utils_3.c\
 parsing/main_parsing.c\
 parsing/parsing_helpers.c\
 parsing/lexer_utils.c\
 parsing/word_extraction.c\
+parsing/word_expansion.c\
+parsing/quote_handler.c\
 parsing/command_parser.c\
 parsing/command_builder.c\
 parsing/command_converter.c\
 parsing/command_converter_utils.c\
 parsing/command_converter_args.c\
 parsing/tokenizer.c\
+execution/pipe_handler.c\
+execution/pipe_executor.c\
 utils/utils.c\
 utils/utils1.c\
 utils/utils_path.c
@@ -45,6 +52,7 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)
 	mkdir -p $(OBJ_PATH)builtin
 	mkdir -p $(OBJ_PATH)parsing
+	mkdir -p $(OBJ_PATH)execution
 	mkdir -p $(OBJ_PATH)utils
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c

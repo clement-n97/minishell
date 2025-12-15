@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:49:35 by clnicola          #+#    #+#             */
-/*   Updated: 2025/11/23 22:00:00 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/06 16:55:18 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_add_back_token(t_token **head, t_token *new)
 	tmp->next = new;
 }
 
-t_token	*ft_make_token(char *input, int *i)
+t_token	*ft_make_token(char *input, int *i, t_data *data)
 {
 	char	*str;
 	t_token	*tok;
@@ -54,7 +54,7 @@ t_token	*ft_make_token(char *input, int *i)
 	}
 	else
 	{
-		str = extract_word(input, i);
+		str = extract_word(input, i, data);
 		tok = ft_new_token(str, WORD);
 	}
 	free(str);

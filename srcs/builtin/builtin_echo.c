@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:33:02 by clnicola          #+#    #+#             */
-/*   Updated: 2025/11/25 21:06:28 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/15 13:04:27 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	ft_print_fd(t_data *data, int i)
 		i++;
 	}
 }
+
 void	builtin_echo(t_data *data)
 {
 	int	i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:59:54 by rlefort           #+#    #+#             */
-/*   Updated: 2025/11/12 14:35:32 by rlefort          ###   ########.fr       */
+/*   Updated: 2025/12/15 15:11:06 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,26 @@ char	*ft_export_noargs(t_env **env)
 	return (output);
 }
 
-void	ft_export(char **args, t_env **env)
+static void	export_single_var(char *arg, t_env **env)
 {
-	int		index;
 	char	*eq_pos;
 	char	*name;
-	char	*value;
+
+	eq_pos = ft_strchr(arg, '=');
+	if (eq_pos && eq_pos != arg)
+	{
+		name = ft_substr(arg, 0, (size_t)(eq_pos - arg));
+		if (name)
+		{
+			ft_set_env(name, &eq_pos[1], env);
+			free(name);
+		}
+	}
+}
+
+void	ft_export(char **args, t_env **env)
+{
+	int	index;
 
 	if (!env || !args || !args[0])
 		return ;
@@ -96,17 +110,7 @@ void	ft_export(char **args, t_env **env)
 	while (args[index])
 	{
 		if (args[index] && args[index][0])
-		{
-			eq_pos = ft_strchr(args[index], '=');
-			if (eq_pos)
-			{
-				value = &eq_pos[1];
-				name = ft_substr(args[index], 0,
-						(size_t)(eq_pos - args[index]));
-				ft_set_env(name, value, env);
-				free(name);
-			}
-		}
+			export_single_var(args[index], env);
 		index++;
 	}
 }
