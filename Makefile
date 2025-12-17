@@ -40,7 +40,8 @@ execution/pipe_handler.c\
 execution/pipe_executor.c\
 utils/utils.c\
 utils/utils1.c\
-utils/utils_path.c
+utils/utils_path.c\
+signal/signals.c
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 OBJS = $(SRCS:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
@@ -54,6 +55,7 @@ $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)parsing
 	mkdir -p $(OBJ_PATH)execution
 	mkdir -p $(OBJ_PATH)utils
+	mkdir -p $(OBJ_PATH)signal
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)

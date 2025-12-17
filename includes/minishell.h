@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:25:06 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 15:25:46 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/16 11:48:02 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <errno.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -37,6 +38,10 @@ typedef enum s_token_type
 	VOID,
 }						t_token_type;
 
+/*
+** Represents a single environment variable as a linked list node.
+** Used to store and manage shell environment variables (HOME, PATH, etc).
+*/
 typedef struct s_env
 {
 	char				*name;
@@ -44,6 +49,11 @@ typedef struct s_env
 	struct s_env		*next;
 }						t_env;
 
+/*
+** Represents a single token in the parsing pipeline.
+** Tokens are created during lexical analysis and linked together.
+** Each token has type information and bidirectional linking.
+*/
 typedef struct s_token
 {
 	char				*token;
@@ -52,6 +62,11 @@ typedef struct s_token
 	struct s_token		*next;
 }						t_token;
 
+/*
+** Represents a single I/O redirection for a command.
+** Examples: input (<), output (>), append (>>), heredoc (<<)
+** Multiple redirections can be chained together.
+*/
 typedef struct s_redir
 {
 	int					type;
@@ -59,6 +74,11 @@ typedef struct s_redir
 	struct s_redir		*next;
 }						t_redir;
 
+/*
+** Represents a single command in a pipeline.
+** Contains command arguments and redirection information.
+** Multiple commands are linked for pipe execution.
+*/
 typedef struct s_command
 {
 	char				**args;
@@ -66,6 +86,10 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
+/*
+** Central data structure holding all shell state and parsed information.
+** Passed through most functions to maintain context during execution.
+*/
 typedef struct s_data
 {
 	char				*input;
@@ -77,6 +101,10 @@ typedef struct s_data
 	int					last_exit_status;
 }						t_data;
 
+/*
+** Helper structure used during quote handling in word expansion.
+** Avoids passing multiple parameters to quote parsing functions.
+*/
 typedef struct s_quote_data
 {
 	char				*str;
@@ -86,12 +114,21 @@ typedef struct s_quote_data
 	t_data				*data;
 }						t_quote_data;
 
+/*
+** Temporary structure passed to forked child processes.
+** Contains environment and data needed by child process execution.
+** Used in fork_and_execute to pass context to child.
+*/
 typedef struct s_fork_data
 {
 	char				**env;
 	t_data				*data;
 }						t_fork_data;
 
+/*
+** Helper structure for ft_set_env function.
+** Tracks iteration state when updating or creating environment variables.
+*/
 typedef struct s_env_set_args
 {
 	t_env				*curr;
@@ -100,6 +137,11 @@ typedef struct s_env_set_args
 	char				*value;
 }						t_env_set_args;
 
+/*
+** Helper structure used during variable expansion (e.g., $HOME, $?).
+** Avoids passing many parameters to expansion functions.
+** Tracks position in input and output strings during expansion.
+*/
 typedef struct s_expand_data
 {
 	char				*str;
@@ -186,4 +228,12 @@ char					**ft_env_to_array(t_env **env);
 int						ft_count_env_vars(t_env **env);
 char					*ft_build_env_string(char *name, char *value);
 void					ft_fill_env_array(char **result, t_env **env);
+
+/*------SIGNALS------*/
+extern volatile int		g_signal_received;
+void					signal_reset_prompt(int signo);
+void					signal_print_newline(int signo);
+void					ignore_sigquit(void);
+void					set_signals_interactive(void);
+void					set_signals_noninteractive(void);
 #endif

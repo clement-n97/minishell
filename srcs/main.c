@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:10:38 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 15:19:55 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:31:58 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,16 @@ static void	shell_loop(t_data *data, char **env)
 	{
 		data->input = readline("User$ ");
 		if (!data->input)
+		{
+			write(1, "exit\n", 5);
 			break ;
+		}
 		add_history(data->input);
 		ft_parsing(data, data->input);
 		execute_input(data, env);
+		if (g_signal_received == SIGINT)
+			data->last_exit_status = 130;
+		g_signal_received = 0;
 	}
 }
 
@@ -52,6 +58,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	set_signals_interactive();
 	data = malloc(sizeof(t_data));
 	data->env = ft_initialize_env();
 	data->last_exit_status = 0;

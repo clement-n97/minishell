@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 00:00:00 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 13:09:58 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:31:58 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ void	execute_pipeline(t_command *cmd, char **env, t_data *data)
 {
 	t_fork_data	fork_data;
 
+	set_signals_noninteractive();
 	fork_data.env = NULL;
 	fork_data.data = NULL;
 	pipeline_loop(cmd, env, data, &fork_data);
+	set_signals_interactive();
 }
