@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:25:06 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/16 11:48:02 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/18 12:57:38 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int						builtin_unset_status(t_data *data);
 int						builtin_env_status(t_data *data);
 int						builtin_exit_status(t_data *data);
 char					*ft_export_noargs(t_env **env);
-void					ft_export(char **args, t_env **env);
+int						ft_export(char **args, t_env **env);
 char					*ft_env(t_env **env);
 void					ft_unset(char **args, t_env **env);
 char					*ft_pwd(void);

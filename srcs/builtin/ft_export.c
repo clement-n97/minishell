@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:59:54 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/15 15:11:06 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:01:08 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,31 @@ char	*ft_export_noargs(t_env **env)
 	return (output);
 }
 
-static void	export_single_var(char *arg, t_env **env)
+static int	export_single_var(char *arg, t_env **env)
 {
 	char	*eq_pos;
 	char	*name;
+	int		ret;
 
+	ret = 0;
 	eq_pos = ft_strchr(arg, '=');
 	if (eq_pos && eq_pos != arg)
 	{
 		name = ft_substr(arg, 0, (size_t)(eq_pos - arg));
 		if (name)
 		{
-			ft_set_env(name, &eq_pos[1], env);
+			if (ft_set_env(name, &eq_pos[1], env))
+				ret = 1;
 			free(name);
 		}
 	}
+	return (ret);
 }
 
-void	ft_export(char **args, t_env **env)
+int	ft_export(char **args, t_env **env)
 {
 	int	index;
+	int	ret;
 
 	if (!env || !args || !args[0])
 		return ;

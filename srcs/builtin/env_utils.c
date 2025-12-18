@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:29:19 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/15 15:14:23 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:07:37 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,19 @@ static void	update_or_create(t_env_set_args *args, t_env **env)
 int	ft_set_env(char *name, char *value, t_env **env)
 {
 	t_env_set_args	args;
+	int i;
 
 	if (!env || !name || !name[0] || !value)
 		return (1);
+	if (ft_isalpha(name[0] || name[0] == '_'))
+		return (1);
+	i = 0;
+	while (name[i] != 0)
+	{
+		if (ft_isalnum(name[i] || name[i] == '_'))
+			return (1);
+		i++;
+	}
 	args.curr = *env;
 	args.prev = NULL;
 	args.name = name;
