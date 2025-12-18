@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 13:37:09 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/15 16:12:13 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:50:44 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	get_exit_code(t_data *data, int arg_count)
 	}
 	if (arg_count == 1)
 	{
-		if (ft_strisnum(data->cmd->args[1]))
-			return (ft_atoi(data->cmd->args[1]));
+		if (ft_strisnum(data->cmd->args[1])) 
+			return (ft_atoi(data->cmd->args[1]) % 256);
 		ft_putstr_fd("exit: numeric argument required\n", STDERR_FILENO);
 		return (2);
 	}

@@ -6,7 +6,7 @@
 /*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 16:00:45 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/18 13:31:15 by rlefort          ###   ########.fr       */
+/*   Updated: 2025/12/18 15:33:36 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_unset(char **args, t_env **env)
 {
-	char	*name;
 	int		i;
 	int		j;
 	int		ret;
@@ -31,7 +30,7 @@ int	ft_unset(char **args, t_env **env)
 		{
 			j = 0;
 			while (args[i][j])
-				if (!isalphanum(args[i][j]) && args[i][j++] != '_')
+				if (!isalnum(args[i][j++]) && args[i][j-1] != '_')
 					ret = 1 ;
 			if (!args[i][j])
 				ft_rm_env(args[i], env);

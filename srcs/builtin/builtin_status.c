@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_status.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 12:00:00 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 12:05:44 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:52:21 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ int	builtin_cd_status(t_data *data)
 	int	ret;
 
 	ret = 0;
+	if (data->cmd->args[2])
+	{
+		ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO);
+		return (1);
+	}
 	if (data->cmd->args[1])
 		ret = ft_cd(data->cmd->args[1], &data->env);
 	else

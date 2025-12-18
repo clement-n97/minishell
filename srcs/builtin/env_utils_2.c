@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:03:37 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/15 15:25:46 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:28:13 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ t_env	*ft_new_env_var(char *name, char *value, t_env *next)
 	if (!curr)
 		return (NULL);
 	curr->name = ft_strdup(name);
-	curr->value = ft_strdup(value);
+	if (value)
+		curr->value = ft_strdup(value);
 	if (!curr->name || !curr->value)
 	{
 		if (curr->name)

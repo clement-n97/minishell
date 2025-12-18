@@ -6,7 +6,7 @@
 /*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 12:00:00 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/18 13:12:12 by rlefort          ###   ########.fr       */
+/*   Updated: 2025/12/18 15:31:19 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	builtin_unset_status(t_data *data)
 
 	ret = 0;
 	if (data->cmd->args[1])
-		ft_unset(data->cmd->args + 1, &data->env);
+		ret = ft_unset(data->cmd->args + 1, &data->env);
 	return (ret);
 }
 

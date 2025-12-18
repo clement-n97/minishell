@@ -6,7 +6,7 @@
 /*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:59:54 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/18 13:01:08 by rlefort          ###   ########.fr       */
+/*   Updated: 2025/12/18 15:29:47 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,13 @@ static int	export_single_var(char *arg, t_env **env)
 			free(name);
 		}
 	}
+	else if (!eq_pos)
+	{
+		if (ft_set_env(arg, NULL, env))
+			ret = 1;
+	}
+	else
+		ret = 1;
 	return (ret);
 }
 
@@ -110,12 +117,17 @@ int	ft_export(char **args, t_env **env)
 	int	ret;
 
 	if (!env || !args || !args[0])
-		return ;
+		return (1);
 	index = 0;
+	ret = 0;
 	while (args[index])
 	{
 		if (args[index] && args[index][0])
-			export_single_var(args[index], env);
+		{
+			if (export_single_var(args[index], env))
+				ret = 1;
+		}
 		index++;
 	}
+	return (ret);
 }

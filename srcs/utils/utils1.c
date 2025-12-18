@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:35:32 by clnicola          #+#    #+#             */
-/*   Updated: 2025/11/23 20:01:13 by clnicola         ###   ########.fr       */
+/*   Updated: 2025/12/18 15:49:50 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strisnum(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
