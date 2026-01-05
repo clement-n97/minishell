@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:25:06 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/16 11:48:02 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:19:20 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "Libft/libft.h"
 # include <errno.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -195,6 +196,7 @@ void					execute_pipeline(t_command *cmd, char **env,
 							t_data *data);
 int						fork_and_execute(t_command *cmd, int prev_fd,
 							int pipe_fd[2], char **env_and_data);
+int						apply_redirections(t_command *cmd);
 
 /*------BUILTIN------*/
 int						is_builtin_cmd(char *cmd);
@@ -208,7 +210,9 @@ int						builtin_unset_status(t_data *data);
 int						builtin_env_status(t_data *data);
 int						builtin_exit_status(t_data *data);
 char					*ft_export_noargs(t_env **env);
-void					ft_export(char **args, t_env **env);
+int						ft_export(char **args, t_env **env);
+int						export_single_var(char *arg, t_env **env);
+int						is_valid_identifier(char *str);
 char					*ft_env(t_env **env);
 void					ft_unset(char **args, t_env **env);
 char					*ft_pwd(void);

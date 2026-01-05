@@ -18,6 +18,7 @@ builtin/ft_cd.c\
 builtin/ft_env.c\
 builtin/ft_exit.c\
 builtin/ft_export.c\
+builtin/ft_export_utils.c\
 builtin/ft_pwd.c\
 builtin/ft_unset.c\
 builtin/builtin_echo.c\
@@ -38,6 +39,7 @@ parsing/command_converter_args.c\
 parsing/tokenizer.c\
 execution/pipe_handler.c\
 execution/pipe_executor.c\
+execution/redir_handler.c\
 utils/utils.c\
 utils/utils1.c\
 utils/utils_path.c\

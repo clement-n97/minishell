@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 17:04:41 by clnicola          #+#    #+#             */
-/*   Updated: 2025/11/24 12:52:06 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:58:58 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	add_arg(t_command *cmd, char *arg)
 void	add_redir(t_command *cmd, int type, char *file)
 {
 	t_redir	*new_redir;
+	t_redir	*last;
 
 	if (!cmd || !file)
 		return ;
@@ -66,6 +67,14 @@ void	add_redir(t_command *cmd, int type, char *file)
 		free(new_redir);
 		return ;
 	}
-	new_redir->next = cmd->redirs;
-	cmd->redirs = new_redir;
+	new_redir->next = NULL;
+	if (!cmd->redirs)
+		cmd->redirs = new_redir;
+	else
+	{
+		last = cmd->redirs;
+		while (last->next)
+			last = last->next;
+		last->next = new_redir;
+	}
 }

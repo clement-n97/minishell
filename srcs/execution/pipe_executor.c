@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 12:00:00 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 13:10:08 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:58:58 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	execute_command(t_command *cmd, char **env, t_data *parent_data)
 {
 	char	*cmd_path;
 
+	if (apply_redirections(cmd) == -1)
+		exit(1);
 	if (!cmd->args || !cmd->args[0])
 		exit(EXIT_SUCCESS);
 	if (is_builtin_cmd(cmd->args[0]))

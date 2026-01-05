@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:59:54 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/15 15:11:06 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 11:19:20 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,34 +83,28 @@ char	*ft_export_noargs(t_env **env)
 	return (output);
 }
 
-static void	export_single_var(char *arg, t_env **env)
-{
-	char	*eq_pos;
-	char	*name;
-
-	eq_pos = ft_strchr(arg, '=');
-	if (eq_pos && eq_pos != arg)
-	{
-		name = ft_substr(arg, 0, (size_t)(eq_pos - arg));
-		if (name)
-		{
-			ft_set_env(name, &eq_pos[1], env);
-			free(name);
-		}
-	}
-}
-
-void	ft_export(char **args, t_env **env)
+int	ft_export(char **args, t_env **env)
 {
 	int	index;
+	int	ret;
 
 	if (!env || !args || !args[0])
-		return ;
+		return (0);
 	index = 0;
+	ret = 0;
 	while (args[index])
 	{
 		if (args[index] && args[index][0])
-			export_single_var(args[index], env);
+		{
+			if (export_single_var(args[index], env))
+			{
+				ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+				ft_putstr_fd(args[index], STDERR_FILENO);
+				ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+				ret = 1;
+			}
+		}
 		index++;
 	}
+	return (ret);
 }

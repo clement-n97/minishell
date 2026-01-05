@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 12:00:00 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 15:20:10 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 10:52:06 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	builtin_export_status(t_data *data)
 
 	ret = 0;
 	if (data->cmd->args[1])
-		ft_export(data->cmd->args + 1, &data->env);
+		ret = ft_export(data->cmd->args + 1, &data->env);
 	else
 	{
 		output = ft_export_noargs(&data->env);
