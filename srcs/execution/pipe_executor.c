@@ -3,33 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_executor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 12:00:00 by clnicola          #+#    #+#             */
-/*   Updated: 2026/01/05 10:58:58 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:55:47 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	execute_not_found(char *cmd_name)
+{
+	ft_putstr_fd("minishell: command not found: ", STDERR_FILENO);
+	ft_putendl_fd(cmd_name, STDERR_FILENO);
+	exit(127);
+}
+
 static void	execute_external_cmd(char *cmd_path, t_command *cmd, char **env)
 {
 	if (execve(cmd_path, cmd->args, env) == -1)
 	{
-		ft_putstr_fd("minishell: permission denied: ", 2);
-		ft_putendl_fd(cmd->args[0], 2);
-		free(cmd_path);
-		exit(126);
+		if (errno == EACCES)
+		{
+			ft_putstr_fd("minishell: permission denied: ", STDERR_FILENO);
+			ft_putendl_fd(cmd->args[0], STDERR_FILENO);
+			free(cmd_path);
+			exit(126);
+		}
+		else
+		{
+			free(cmd_path);
+			execute_not_found(cmd->args[0]);
+		}
 	}
 	free(cmd_path);
 	exit(EXIT_FAILURE);
-}
-
-static void	execute_not_found(char *cmd_name)
-{
-	ft_putstr_fd("minishell: command not found: ", 2);
-	ft_putendl_fd(cmd_name, 2);
-	exit(127);
 }
 
 void	execute_command(t_command *cmd, char **env, t_data *parent_data)

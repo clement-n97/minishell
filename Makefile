@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = cc
-C_FLAGS = -Wall -Wextra -Werror -no-pie
+C_FLAGS = -Wall -Wextra -Werror
 
 SRC_PATH = ./srcs/
 OBJ_PATH = ./objs/

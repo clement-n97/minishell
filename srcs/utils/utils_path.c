@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 13:07:44 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 13:07:45 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:43:25 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*check_path(char *cmd)
 {
 	if (cmd[0] == '/' || ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, F_OK | X_OK) == 0)
+		if (access(cmd, F_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
@@ -35,7 +35,7 @@ static char	*search_in_path(char **path, char *cmd)
 		temp = ft_strjoin(path[i], "/");
 		full_path = ft_strjoin(temp, cmd);
 		free(temp);
-		if (full_path && access(full_path, F_OK | X_OK) == 0)
+		if (full_path && access(full_path, F_OK) == 0)
 			return (full_path);
 		free(full_path);
 		i++;
