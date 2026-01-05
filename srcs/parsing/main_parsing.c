@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:19:02 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 13:04:27 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:15:08 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ t_token	*ft_word_to_token(char *input, t_data *data)
 			continue ;
 		}
 		new = ft_make_token(input, &i, data);
-		ft_add_back_token(&head, new);
+		if (new)
+			ft_add_back_token(&head, new);
 	}
 	return (head);
 }

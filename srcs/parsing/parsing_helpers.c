@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_helpers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:49:35 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/06 16:55:18 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/05 15:16:34 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ t_token	*ft_make_token(char *input, int *i, t_data *data)
 	else
 	{
 		str = extract_word(input, i, data);
-		tok = ft_new_token(str, WORD);
+		if (str[0] == '\0')
+			tok = NULL;
+		else
+			tok = ft_new_token(str, WORD);
 	}
 	free(str);
 	return (tok);
