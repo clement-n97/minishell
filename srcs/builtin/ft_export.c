@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 17:59:54 by rlefort           #+#    #+#             */
-/*   Updated: 2026/01/05 11:19:20 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/07 11:20:41 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ static char	*build_var_line(t_env *var)
 	char	*var_line;
 	size_t	size;
 
-	size = 11 + ft_strlen(var->name) + 1 + ft_strlen(var->value) + 2;
+	size = 11 + ft_strlen(var->name) + 2 + ft_strlen(var->value) + 3;
 	var_line = calloc(sizeof(char), size);
 	ft_strlcat(var_line, "declare -x ", size);
 	ft_strlcat(var_line, var->name, size);
 	ft_strlcat(var_line, "=", size);
+	ft_strlcat(var_line, "\"", size);
 	ft_strlcat(var_line, var->value, size);
+	ft_strlcat(var_line, "\"", size);
 	ft_strlcat(var_line, "\n", size);
 	return (var_line);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_executor.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
+/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 12:00:00 by clnicola          #+#    #+#             */
-/*   Updated: 2026/01/05 15:55:47 by rlefort          ###   ########.fr       */
+/*   Updated: 2026/01/07 13:57:44 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	execute_not_found(char *cmd_name)
 {
-	ft_putstr_fd("minishell: command not found: ", STDERR_FILENO);
-	ft_putendl_fd(cmd_name, STDERR_FILENO);
+	ft_putstr_fd("minishell: command not found: ", 2);
+	ft_putendl_fd(cmd_name, 2);
 	exit(127);
 }
 
@@ -25,8 +25,8 @@ static void	execute_external_cmd(char *cmd_path, t_command *cmd, char **env)
 	{
 		if (errno == EACCES)
 		{
-			ft_putstr_fd("minishell: permission denied: ", STDERR_FILENO);
-			ft_putendl_fd(cmd->args[0], STDERR_FILENO);
+			ft_putstr_fd("minishell: permission denied: ", 2);
+			ft_putendl_fd(cmd->args[0], 2);
 			free(cmd_path);
 			exit(126);
 		}
