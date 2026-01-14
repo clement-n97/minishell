@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_converter.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:26:35 by clnicola          #+#    #+#             */
-/*   Updated: 2025/12/15 13:04:27 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:57:18 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ t_command	*ft_tokens_to_commands(t_token *token_list)
 	t_command	*head;
 	t_command	*new_cmd;
 	int			arg_count;
+	t_token		*start;
 
+	start = token_list;
 	head = NULL;
 	while (token_list)
 	{

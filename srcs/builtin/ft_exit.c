@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 13:37:09 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/15 16:12:13 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:50:06 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ void	builtin_exit(t_data *data)
 		arg_count--;
 	}
 	exit_code = get_exit_code(data, arg_count);
+	ft_free_data(data);
 	exit(exit_code);
 }

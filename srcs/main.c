@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 13:10:38 by clnicola          #+#    #+#             */
-/*   Updated: 2026/01/05 11:03:23 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:41:57 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static void	shell_loop(t_data *data, char **env)
 		add_history(data->input);
 		ft_parsing(data, data->input);
 		execute_input(data, env);
+		ft_free_datatoken(data->token);
+		ft_free_datacmd(data->cmd);
 		if (g_signal_received == SIGINT)
 			data->last_exit_status = 130;
 		g_signal_received = 0;
@@ -85,7 +87,9 @@ int	main(int ac, char **av, char **env)
 	data = malloc(sizeof(t_data));
 	data->env = ft_initialize_env();
 	data->last_exit_status = 0;
+	data->token = NULL;
+	data->cmd = NULL;
 	shell_loop(data, env);
-	free(data);
+	ft_free_data(data);
 	return (0);
 }

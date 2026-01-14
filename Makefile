@@ -43,6 +43,7 @@ execution/redir_handler.c\
 utils/utils.c\
 utils/utils1.c\
 utils/utils_path.c\
+utils/ft_free_data.c\
 signal/signals.c
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))

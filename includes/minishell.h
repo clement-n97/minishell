@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
+/*   By: rlefort <rlefort@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 11:25:06 by clnicola          #+#    #+#             */
-/*   Updated: 2026/01/05 11:19:20 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:40:12 by rlefort          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_token
 {
 	char				*token;
 	t_token_type		type;
-	struct s_token		*previous;
 	struct s_token		*next;
 }						t_token;
 
@@ -190,6 +189,9 @@ char					*ft_prompt_name(void);
 int						ft_strisnum(char *str);
 int						ft_is_space(char c);
 int						ft_is_operator(char c);
+void					ft_free_data(t_data *data);
+void					ft_free_datacmd(t_command *cmd);
+void					ft_free_datatoken(t_token *tok);
 
 /*------EXECUTION------*/
 void					execute_pipeline(t_command *cmd, char **env,
