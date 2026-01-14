@@ -6,7 +6,7 @@
 /*   By: clnicola <clnicola@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:29:19 by rlefort           #+#    #+#             */
-/*   Updated: 2025/12/15 15:14:23 by clnicola         ###   ########.fr       */
+/*   Updated: 2026/01/07 11:03:38 by clnicola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,6 @@ t_env	*ft_initialize_env(void)
 	ft_set_env("SHLVL", "1", &env);
 	ft_set_env("PATH", getenv("PATH"), &env);
 	ft_set_env("HOME", getenv("HOME"), &env);
+	ft_set_env("USER", getenv("USER"), &env);
 	return (env);
 }

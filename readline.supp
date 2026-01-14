@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     leak readline
     Memcheck:Leak 
     ...
@@ -9,4 +10,16 @@
     Memcheck:Leak
     ...
     fun:add_history
+=======
+	leak readline
+	Memcheck:Leak
+	...
+	fun:readline
+}
+{
+	leak add_history
+	Memcheck:Leak
+	...
+	fun:add_history
+>>>>>>> 3ae89c4a611bd220b12dddafdc89b6f7fb058ed9
 }
